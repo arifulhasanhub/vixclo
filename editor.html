@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VIXCLO — Custom Studio</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#090909;color:#fff;font-family:Inter,Arial,sans-serif;font-size:13px}
+button,input,select{font:inherit}.app{height:100vh;display:grid;grid-template-columns:290px 1fr 330px;overflow:hidden}
+.left,.right{background:#111;border-color:#252525}.left{border-right:1px solid #252525;overflow:auto}.right{border-left:1px solid #252525;overflow:auto}
+.brand{height:58px;display:flex;align-items:center;padding:8px 16px;border-bottom:1px solid #292929}.brand img{height:44px;width:44px;object-fit:contain}.brand b{margin-left:9px;font-size:14px}.brand span{display:block;color:#777;font-size:8px;margin-top:3px}
+.tabs{display:flex;padding:10px;gap:5px;border-bottom:1px solid #292929}.tabs button{flex:1;border:1px solid #333;background:#090909;color:#aaa;padding:9px;border-radius:4px;font-size:9px;font-weight:800}.tabs button.active{background:#e50914;border-color:#e50914;color:#fff}
+.section{padding:14px;border-bottom:1px solid #242424}.section h3{font-size:10px;margin:0 0 11px;text-transform:uppercase;letter-spacing:1px}.muted{color:#777;font-size:9px;line-height:1.5}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.design{background:#0a0a0a;border:1px solid #333;border-radius:3px;padding:3px;color:#777;cursor:pointer}.design.active{border:2px solid #e50914;color:#fff}.design img{width:100%;height:57px;object-fit:contain}.design small{font-size:7px}
+.control{margin:10px 0}.control label{display:flex;justify-content:space-between;color:#aaa;font-size:9px;margin-bottom:5px}.control label b{color:#fff}.control input[type=range]{width:100%;accent-color:#e50914}
+input[type=text],input[type=number],select{width:100%;background:#090909;border:1px solid #333;color:#fff;padding:9px;border-radius:4px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:7px}.save{width:100%;padding:11px;border:0;background:#e50914;color:#fff;font-weight:900;border-radius:4px;cursor:pointer}.secondary{width:100%;padding:10px;border:1px solid #444;background:#1b1b1b;color:#fff;border-radius:4px;margin-top:7px;cursor:pointer}
+.center{background:#070707;display:flex;flex-direction:column;min-width:0}.topbar{height:58px;border-bottom:1px solid #252525;display:flex;align-items:center;justify-content:space-between;padding:0 16px}.topbar b{font-size:12px}.topbar span{color:#777;font-size:9px}
+.canvas-area{flex:1;overflow:auto;display:flex;justify-content:center;align-items:center;padding:24px}.canvas{width:min(760px,90vw);aspect-ratio:1.35;background:#222;position:relative;overflow:hidden;box-shadow:0 15px 50px #000}
+.canvas>img.base{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.print{position:absolute;width:19%;left:17%;top:32%;cursor:grab;user-select:none;touch-action:none;z-index:3}.print.selected{outline:1px dashed #e50914;outline-offset:7px}.print.back{left:56%;top:32%}
+.handle{position:absolute;width:9px;height:9px;background:#e50914;border:2px solid #fff;border-radius:50%;right:-5px;bottom:-5px;cursor:nwse-resize;z-index:10}
+.toolbar{height:48px;background:#111;border-top:1px solid #292929;display:flex;align-items:center;justify-content:center;gap:7px}.toolbar button{background:#1a1a1a;color:#ddd;border:1px solid #333;padding:7px 11px;border-radius:4px;font-size:9px}.toolbar button.active{border-color:#e50914;color:#fff}
+.side-title{padding:16px;border-bottom:1px solid #292929}.side-title b{font-size:12px}.side-title p{color:#777;font-size:8px;margin:5px 0 0}
+.summary{padding:15px}.summary h3{font-size:10px;text-transform:uppercase;margin:0 0 10px}.summary .line{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #242424;font-size:9px}.total{font-size:20px;font-weight:900;margin:15px 0;color:#e50914}.notice{background:#171717;border:1px solid #2b2b2b;padding:10px;color:#999;font-size:8px;line-height:1.5;margin-bottom:10px}
+.orders{padding:15px;border-top:1px solid #292929}.orders h3{font-size:10px}.orderbox{border:1px solid #333;background:#0b0b0b;padding:10px;margin-top:7px;font-size:8px;color:#aaa}.orderbox b{color:#fff}
+@media(max-width:1050px){.app{grid-template-columns:250px 1fr}.right{display:none}}@media(max-width:720px){.app{grid-template-columns:1fr}.left{display:none}.canvas-area{padding:8px}.canvas{width:100%}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="left">
+<div class="brand"><img src="assets/vixclo-logo.png"><div><b>VIXCLO</b><span>CUSTOM STUDIO</span></div></div>
+<div class="tabs"><button id="frontTab" class="active">FRONT</button><button id="backTab">BACK</button></div>
+
+<div class="section"><h3 id="designTitle">Choose Front Design</h3><div class="grid" id="designGrid"></div></div>
+
+<div class="section">
+<h3>Position & Size</h3>
+<div class="control"><label>Size <b id="sizeVal">100%</b></label><input id="size" type="range" min="50" max="170" value="100"></div>
+<div class="control"><label>Horizontal <b id="xVal">17%</b></label><input id="x" type="range" min="0" max="80" value="17"></div>
+<div class="control"><label>Vertical <b id="yVal">32%</b></label><input id="y" type="range" min="0" max="80" value="32"></div>
+<p class="muted">You can also drag the selected print directly on the shirt. Front and Back can be positioned independently.</p>
+</div>
+
+<div class="section">
+<h3>Product</h3>
+<div class="row"><div><label class="muted">Color</label><select id="color"><option value="black-front-back.png">Black</option><option value="white-front-back.png">White</option></select></div><div><label class="muted">Size</label><select id="shirtSize"><option>M</option><option selected>L</option><option>XL</option><option>XXL</option></select></div></div>
+<div class="control"><label>Quantity <b id="qtyVal">1</b></label><input id="qty" type="range" min="1" max="10" value="1"></div>
+</div>
+
+<div class="section">
+<h3>Customer</h3>
+<div class="control"><label>Name</label><input id="customerName" type="text" placeholder="Customer name"></div>
+<div class="control"><label>Phone</label><input id="customerPhone" type="text" placeholder="01XXXXXXXXX"></div>
+<div class="control"><label>Address</label><input id="customerAddress" type="text" placeholder="Delivery address"></div>
+</div>
+
+<div class="section"><button class="save" id="placeOrder">PLACE DEMO ORDER</button><button class="secondary" id="saveDesign">SAVE DESIGN IN THIS BROWSER</button><button class="secondary" id="reset">RESET</button></div>
+</aside>
+
+<main class="center">
+<div class="topbar"><b>VIXCLO CUSTOM STUDIO</b><span>Drag • Resize • Position • Preview • Order</span></div>
+<div class="canvas-area"><div class="canvas" id="canvas">
+<img id="base" class="base" src="assets/mockups/black-front-back.png">
+<div id="frontLayer" class="print selected"><img id="frontPrint" src="assets/designs/design-07.svg" style="width:100%;display:block"><div class="handle"></div></div>
+<div id="backLayer" class="print back"><img id="backPrint" src="assets/designs/design-09.svg" style="width:100%;display:block"><div class="handle"></div></div>
+</div></div>
+<div class="toolbar"><button id="frontSelect" class="active">Edit Front</button><button id="backSelect">Edit Back</button><button id="centerX">Center Horizontally</button><button id="centerY">Center Vertically</button></div>
+</main>
+
+<aside class="right">
+<div class="side-title"><b>ORDER PREVIEW</b><p>Your exact customization is captured when you place the demo order.</p></div>
+<div class="summary">
+<h3>Customization</h3>
+<div class="line"><span>Front</span><b id="frontSummary">Design 07</b></div>
+<div class="line"><span>Back</span><b id="backSummary">Design 09</b></div>
+<div class="line"><span>Color</span><b id="colorSummary">Black</b></div>
+<div class="line"><span>Size</span><b id="sizeSummary">L</b></div>
+<div class="line"><span>Quantity</span><b id="qtySummary">1</b></div>
+<div class="total">৳<span id="total">450</span></div>
+<div class="notice">Demo mode: order details are saved in this browser. For a real store, connect this same order object to a database/API/WhatsApp checkout.</div>
+</div>
+<div class="orders"><h3>LAST SAVED ORDERS</h3><div id="orders"></div></div>
+</aside>
+</div>
+
+<script>
+const names=["X","CHAOS","BEAR","NO FEAR","WINGS","BORN TO BE REAL","VIXCLO","XX","ROSE","MOUNTAIN","BELIEVE","EAGLE","X","MAKE IT HAPPEN"];
+const price=450;
+let side="front";
+let state={
+ front:{design:6,size:100,x:17,y:32},
+ back:{design:8,size:100,x:56,y:32},
+ color:"black-front-back.png",shirtSize:"L",qty:1,
+ customer:{name:"",phone:"",address:""}
+};
+const $=id=>document.getElementById(id);
+const file=i=>"assets/designs/design-"+String(i+1).padStart(2,"0")+".svg";
+
+function current(){return state[side]}
+function build(){
+ $("designGrid").innerHTML=names.map((n,i)=>`<button class="design ${current().design===i?"active":""}" data-i="${i}"><img src="${file(i)}"><small>${String(i+1).padStart(2,"0")} • ${n}</small></button>`).join("");
+ $("designGrid").querySelectorAll("button").forEach(b=>b.onclick=()=>{current().design=+b.dataset.i;render()});
+}
+function render(){
+ const s=current(), layer=$(side+"Layer"), img=$(side+"Print");
+ $("designTitle").textContent="Choose "+(side==="front"?"Front":"Back")+" Design";
+ $("frontTab").classList.toggle("active",side==="front");$("backTab").classList.toggle("active",side==="back");
+ $("frontSelect").classList.toggle("active",side==="front");$("backSelect").classList.toggle("active",side==="back");
+ $("frontLayer").classList.toggle("selected",side==="front");$("backLayer").classList.toggle("selected",side==="back");
+ $("frontPrint").src=file(state.front.design);$("backPrint").src=file(state.back.design);
+ layer.style.width=(19*s.size/100)+"%";layer.style.left=s.x+"%";layer.style.top=s.y+"%";
+ $("size").value=s.size;$("x").value=s.x;$("y").value=s.y;
+ $("sizeVal").textContent=s.size+"%";$("xVal").textContent=Math.round(s.x)+"%";$("yVal").textContent=Math.round(s.y)+"%";
+ $("base").src="assets/mockups/"+state.color;
+ $("qty").value=state.qty;$("qtyVal").textContent=state.qty;
+ $("color").value=state.color;$("shirtSize").value=state.shirtSize;
+ $("frontSummary").textContent="Design "+String(state.front.design+1).padStart(2,"0")+" • "+names[state.front.design];
+ $("backSummary").textContent="Design "+String(state.back.design+1).padStart(2,"0")+" • "+names[state.back.design];
+ $("colorSummary").textContent=state.color.startsWith("white")?"White":"Black";
+ $("sizeSummary").textContent=state.shirtSize;$("qtySummary").textContent=state.qty;
+ $("total").textContent=(price*state.qty).toLocaleString();
+ $("customerName").value=state.customer.name;$("customerPhone").value=state.customer.phone;$("customerAddress").value=state.customer.address;
+}
+function selectSide(s){side=s;render();}
+
+$("frontTab").onclick=()=>selectSide("front");$("backTab").onclick=()=>selectSide("back");
+$("frontSelect").onclick=()=>selectSide("front");$("backSelect").onclick=()=>selectSide("back");
+["size","x","y"].forEach(id=>$(id).oninput=e=>{current()[id]=+e.target.value;render()});
+$("color").onchange=e=>{state.color=e.target.value;render()};
+$("shirtSize").onchange=e=>{state.shirtSize=e.target.value;render()};
+$("qty").oninput=e=>{state.qty=+e.target.value;render()};
+$("customerName").oninput=e=>state.customer.name=e.target.value;
+$("customerPhone").oninput=e=>state.customer.phone=e.target.value;
+$("customerAddress").oninput=e=>state.customer.address=e.target.value;
+$("centerX").onclick=()=>{current().x=side==="front"?40.5:40.5;render()};
+$("centerY").onclick=()=>{current().y=40;render()};
+
+function dragResize(layer,sideName){
+ let dragging=false,resize=false,sx=0,sy=0,ox=0,oy=0,os=100;
+ layer.addEventListener("pointerdown",e=>{
+   if(e.target.classList.contains("handle")) resize=true; else dragging=true;
+   layer.setPointerCapture(e.pointerId);sx=e.clientX;sy=e.clientY;
+   const s=state[sideName];ox=s.x;oy=s.y;os=s.size;e.preventDefault();
+ });
+ layer.addEventListener("pointermove",e=>{
+   if(!dragging&&!resize)return;
+   const r=$("canvas").getBoundingClientRect(),s=state[sideName];
+   if(dragging){s.x=Math.max(0,Math.min(80,ox+(e.clientX-sx)/r.width*100));s.y=Math.max(0,Math.min(80,oy+(e.clientY-sy)/r.height*100))}
+   if(resize){s.size=Math.max(50,Math.min(170,os+(e.clientX-sx)/r.width*500))}
+   render();
+ });
+ layer.addEventListener("pointerup",()=>{dragging=false;resize=false});
+}
+dragResize($("frontLayer"),"front");dragResize($("backLayer"),"back");
+
+function orderObject(){
+ return {orderId:"VIX-"+Date.now().toString().slice(-8),createdAt:new Date().toISOString(),
+  customer:{...state.customer},product:{color:state.color,shirtSize:state.shirtSize,quantity:state.qty},
+  customization:{front:{...state.front},back:{...state.back}},
+  pricePerPiece:price,total:price*state.qty};
+}
+function saveOrder(){
+ const o=orderObject();let arr=JSON.parse(localStorage.getItem("vixcloOrders")||"[]");arr.unshift(o);localStorage.setItem("vixcloOrders",JSON.stringify(arr.slice(0,20)));showOrders();return o;
+}
+function showOrders(){
+ const arr=JSON.parse(localStorage.getItem("vixcloOrders")||"[]");
+ $("orders").innerHTML=arr.length?arr.map(o=>`<div class="orderbox"><b>${o.orderId}</b><br>Front: Design ${String(o.customization.front.design+1).padStart(2,"0")} — ${Math.round(o.customization.front.size)}%<br>Back: Design ${String(o.customization.back.design+1).padStart(2,"0")} — ${Math.round(o.customization.back.size)}%<br>Qty: ${o.product.quantity} • Total: ৳${o.total}</div>`).join(""):"<span class='muted'>No saved orders yet.</span>";
+}
+$("placeOrder").onclick=()=>{const o=saveOrder();alert("Demo order saved! Order ID: "+o.orderId)};
+$("saveDesign").onclick=()=>{localStorage.setItem("vixcloDraft",JSON.stringify(state));alert("Design saved in this browser.")};
+$("reset").onclick=()=>{localStorage.removeItem("vixcloDraft");location.reload()};
+
+const draft=localStorage.getItem("vixcloDraft");if(draft)try{state=JSON.parse(draft)}catch(e){}
+build();render();showOrders();
+</script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+VIXCLO WEBSITE EDIT GUIDE
+
+1) HOME PAGE
+Open index.html.
+The page is now designed in the same structure/vibe as the reference you supplied:
+top bar -> navbar -> large hero -> benefits -> categories -> Custom Lab feature -> featured designs -> brand strip -> lookbook -> reviews -> newsletter -> footer.
+
+2) CUSTOM LAB
+Open custom.html.
+This is the main function of the website.
+Front and Back are separate.
+Each side has independent design, size and position.
+Design can be dragged anywhere on the shirt.
+
+3) CHANGE YOUR 14 DESIGNS
+Replace:
+assets/designs/design-01.svg ... design-14.svg
+Keep the filenames.
+
+4) CHANGE SHIRT MOCKUPS
+Replace:
+assets/mockups/black-front-back.png
+assets/mockups/white-front-back.png
+
+5) CHANGE LOGO
+Replace:
+assets/vixclo-logo.png
+
+6) IMPORTANT
+The home page uses the available mockup/design assets from the demo. If you later provide your model/product photos, they can replace the category/lookbook/hero images without changing the Custom Lab logic.
+
+7) RUN
+Extract ZIP -> open index.html.
+No hosting is required for this demo.
