@@ -1,21 +1,37 @@
-VIXCLO COMPLETE EDITABLE DEMO
+VIXCLO COMPLETE EDITABLE DEMO — DELIVERY + PAYMENT
 
-Open index.html after extracting.
+OPEN:
+1. Extract the ZIP.
+2. Open index.html.
+3. Choose any Dropshoulder collection item -> Custom Lab.
 
-Main files:
-index.html = Home
-custom.html = Custom Lab
-config.js = delivery + WhatsApp
-products.js = products/prices
-style.css = visual design
-EDIT_GUIDE.html = detailed editing guide
+CUSTOM LAB:
+- Front and Back are independent.
+- Select different designs for each side.
+- Size, Horizontal and Vertical controls work separately.
+- Center X / Center Y are available.
+- Black/White, M/L/XL/XXL.
 
-Delivery:
-Inside Chattogram = ৳60
-Outside Chattogram = ৳130
-No free delivery.
+DELIVERY:
+- Inside Chattogram: ৳60
+- Outside Chattogram: ৳130
+- No free delivery text.
 
-Flow:
-Collection -> Select & Customize -> Custom Lab -> Front/Back -> drag/resize -> color -> size -> delivery -> customer details -> order.
+PAYMENT:
+- Cash on Delivery
+- bKash (manual)
+- Nagad (manual)
+Edit payment numbers and WhatsApp number in config.js.
+For real automatic payment verification, connect a real gateway/backend.
 
-This is a front-end demo. A real multi-device admin system needs a backend/database.
+EDIT ASSETS:
+assets/designs/design-01.svg ... design-14.svg
+assets/mockups/black-front-back.png
+assets/mockups/white-front-back.png
+assets/vixclo-logo.png
+
+PRODUCT PRICE:
+Edit productPrice in config.js.
+
+LIVE HOSTING:
+This is a static front-end demo. It can be hosted on GitHub Pages/Netlify/Vercel. Real payment/order storage needs a backend or service.

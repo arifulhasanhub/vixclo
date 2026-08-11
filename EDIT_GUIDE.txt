@@ -1,34 +1,26 @@
-VIXCLO WEBSITE EDIT GUIDE
+VIXCLO EDIT GUIDE
 
-1) HOME PAGE
-Open index.html.
-The page is now designed in the same structure/vibe as the reference you supplied:
-top bar -> navbar -> large hero -> benefits -> categories -> Custom Lab feature -> featured designs -> brand strip -> lookbook -> reviews -> newsletter -> footer.
+HOME: index.html
+CUSTOM LAB: custom.html
+CONFIG: config.js
+DESIGNS: assets/designs/design-01.svg ... design-14.svg
+MOCKUPS: assets/mockups/black-front-back.png and white-front-back.png
+LOGO: assets/vixclo-logo.png
 
-2) CUSTOM LAB
-Open custom.html.
-This is the main function of the website.
-Front and Back are separate.
-Each side has independent design, size and position.
-Design can be dragged anywhere on the shirt.
+DELIVERY:
+Inside Chattogram = 60
+Outside Chattogram = 130
+Change in config.js and custom.html only if you want different prices.
 
-3) CHANGE YOUR 14 DESIGNS
-Replace:
-assets/designs/design-01.svg ... design-14.svg
-Keep the filenames.
+PAYMENT:
+config.js -> payment.bkash / payment.nagad
+Payment options in Custom Lab: COD, bKash, Nagad.
 
-4) CHANGE SHIRT MOCKUPS
-Replace:
-assets/mockups/black-front-back.png
-assets/mockups/white-front-back.png
+WHATSAPP:
+config.js -> whatsapp (international number without + or spaces)
 
-5) CHANGE LOGO
-Replace:
-assets/vixclo-logo.png
+PRODUCT PRICE:
+config.js -> productPrice
 
-6) IMPORTANT
-The home page uses the available mockup/design assets from the demo. If you later provide your model/product photos, they can replace the category/lookbook/hero images without changing the Custom Lab logic.
-
-7) RUN
-Extract ZIP -> open index.html.
-No hosting is required for this demo.
+CUSTOM LAB:
+Front and Back are separate. Each side has its own design, size and position.
